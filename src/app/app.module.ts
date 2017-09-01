@@ -15,7 +15,7 @@ import { AgmCoreModule, MapsAPILoader } from '@agm/core';
     BrowserModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDHedrgF7LKlyUVa0HvqsbB-IWmpz3owi4',
-      libraries: ["places"]
+      libraries: ['places']
     }),
     FormsModule,
     ReactiveFormsModule
