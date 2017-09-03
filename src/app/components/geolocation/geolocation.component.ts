@@ -2,10 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef, NgZone, AfterViewInit } from 
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+import { BranchService } from '../../services/branch.service';
+import { LoggingService } from '../../services/logging.service';
 @Component({
   selector: 'app-geolocation',
   templateUrl: './geolocation.component.html',
-  styleUrls: ['./geolocation.component.css']
+  styleUrls: ['./geolocation.component.css'],
+  providers: [BranchService, LoggingService]
 })
 export class GeolocationComponent implements OnInit {
 
@@ -17,11 +20,11 @@ export class GeolocationComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  @ViewChild('#info')
+  @ViewChild('info')
   public infoWindowElementRef: ElementRef;
 
   constructor(private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone) {
+    private ngZone: NgZone, private branchService: BranchService, private loggingService: LoggingService) {
 
   }
 
@@ -40,7 +43,7 @@ export class GeolocationComponent implements OnInit {
       const infowindow = new google.maps.InfoWindow();
       const infowindowContent = this.infoWindowElementRef.nativeElement;
       infowindow.setContent(infowindowContent);
-      
+
 
 
       autocomplete.addListener('place_changed', () => {
@@ -67,7 +70,6 @@ export class GeolocationComponent implements OnInit {
         });
       });
     });
-
   }
 
   private setCurrentPosition() {
