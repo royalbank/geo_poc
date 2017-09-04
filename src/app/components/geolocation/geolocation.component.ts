@@ -4,6 +4,7 @@ import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import { BranchService } from '../../services/branch.service';
 import { LoggingService } from '../../services/logging.service';
+import { Branch } from '../../models/branch';
 @Component({
   selector: 'app-geolocation',
   templateUrl: './geolocation.component.html',
@@ -16,6 +17,9 @@ export class GeolocationComponent implements OnInit {
   public longitude = -89.6650232;
   public searchControl: FormControl;
   public zoom: number;
+  public branches: Branch[]
+  public selectedBranch: Branch;
+  public infoWindowOpened;
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
@@ -29,7 +33,8 @@ export class GeolocationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.zoom = 4;
+    //this.branches = this.branchService.getBranches();
+    this.zoom = 14;
 
     // create search FormControl
     this.searchControl = new FormControl();
@@ -47,7 +52,9 @@ export class GeolocationComponent implements OnInit {
 
 
       autocomplete.addListener('place_changed', () => {
+
         this.ngZone.run(() => {
+          this.infoWindowOpened = null;
           // get the place result
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
@@ -66,7 +73,13 @@ export class GeolocationComponent implements OnInit {
           // set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
-          this.zoom = 12;
+          this.zoom = 14;
+
+
+          this.branchService.getNearbyBranches(this.latitude, this.longitude).subscribe(resp => {
+            console.log(resp.text());
+            this.branches = JSON.parse(resp.text());
+          });
         });
       });
     });
@@ -77,8 +90,27 @@ export class GeolocationComponent implements OnInit {
       const pos = navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
-        this.zoom = 12;
+        this.zoom = 14;
       });
     }
+  }
+
+  public mapMarkerClicked(branch: Branch, infoWindow) {
+    console.log(branch);
+    if (this.infoWindowOpened && infoWindow && this.infoWindowOpened.latitude === infoWindow.latitude && this.infoWindowOpened.longitude === infoWindow.longitude) {
+      return;
+    }
+    if (this.infoWindowOpened) {
+      this.infoWindowOpened.close();
+    }
+    this.infoWindowOpened = infoWindow;
+    this.selectedBranch = branch;
+
+  }
+
+  public mapClicked($event) {
+    // this.latitude = $event.coords.lat;
+    // this.latitude = $event.coords.lng;
+    // this.setCurrentPosition();
   }
 }

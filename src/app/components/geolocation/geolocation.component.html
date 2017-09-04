@@ -1,34 +1,30 @@
-<!-- <div class="container">
-  <h1>Google Maps Places Autocomplete</h1>
-  <div class="form-group">
-    <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
-  </div>
-  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-  </agm-map>
-</div> -->
-
-
 <div class="pac-card" id="pac-card">
-  <div>
-    <div id="title">
-      Autocomplete search
-    </div>
-    <div id="pac-container">
-      <input id="pac-input" placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
-        class="form-control" #search [formControl]="searchControl">
-    </div>
-    <div id="pac-container">
-      <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-        <agm-info-window [latitude]="latitude" [longitude]="longitude" [disableAutoPan]="true">Hi, this is the content of the <strong>info window</strong></agm-info-window>          
-      </agm-map>
-    </div>
-  </div>
+  <md-card>
+    <form class="example-form">
+      <md-form-field class="example-full-width">
+        <input mdInput placeholder="type your address" value="Sushi" #search [formControl]="searchControl" autocorrect="off" autocapitalize="off"
+          spellcheck="off" type="text">
+      </md-form-field>
+    </form>
+  </md-card>
+
+  <md-card>
+    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom" (mapClick)='mapClicked($event)'>
+      <agm-marker *ngFor="let branch of branches; let i = index;" [latitude]="branch.lat" [longitude]="branch.lng" (markerClick)="mapMarkerClicked(branch, iw)">
+        <agm-info-window #iw [latitude]="branch.lat" [longitude]="branch.lng" [disableAutoPan]="true"><strong>{{branch.name}}</strong><br>{{branch.address}}<br>{{branch.postalCode}}<br>{{branch.phone}}<br> transit #:
+          {{branch.transit}}
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
+  </md-card>
 
   <div id="infowindow-content" #info>
     <img src="" width="16" height="16" id="place-icon">
     <span id="place-name" class="title"></span><br>
     <span id="place-address"></span>
   </div>
+
+  <md-card *ngIf="selectedBranch">
+    <strong>{{selectedBranch.name}}</strong><br>{{selectedBranch.address}}<br>{{selectedBranch.postalCode}}<br>{{selectedBranch.phone}}<br>    transit #: {{selectedBranch.transit}}
+  </md-card>
 </div>
