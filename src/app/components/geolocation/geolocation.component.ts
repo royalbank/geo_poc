@@ -17,7 +17,7 @@ export class GeolocationComponent implements OnInit {
   public longitude = -89.6650232;
   public searchControl: FormControl;
   public zoom: number;
-  public branches: Branch[]
+  public branches: Branch[];
   public selectedBranch: Branch;
   public infoWindowOpened;
 
@@ -33,7 +33,7 @@ export class GeolocationComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.branches = this.branchService.getBranches();
+    // this.branches = this.branchService.getBranches();
     this.zoom = 14;
 
     // create search FormControl
@@ -97,7 +97,8 @@ export class GeolocationComponent implements OnInit {
 
   public mapMarkerClicked(branch: Branch, infoWindow) {
     console.log(branch);
-    if (this.infoWindowOpened && infoWindow && this.infoWindowOpened.latitude === infoWindow.latitude && this.infoWindowOpened.longitude === infoWindow.longitude) {
+    if (this.infoWindowOpened && infoWindow && this.infoWindowOpened.latitude === infoWindow.latitude
+      && this.infoWindowOpened.longitude === infoWindow.longitude) {
       return;
     }
     if (this.infoWindowOpened) {

@@ -8,7 +8,9 @@ import { HttpModule } from '@angular/http';
 import { DocumentComponent } from './components/document/document.component';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdInputModule,MdCardModule, MdTabsModule, MdMenuModule, MdToolbarModule, MdButtonModule, MdCheckboxModule,MdIconModule } from '@angular/material';
+import { MdInputModule, MdCardModule, MdTabsModule, MdMenuModule, MdToolbarModule} from '@angular/material';
+import { MdButtonModule, MdCheckboxModule, MdIconModule } from '@angular/material';
+
 import 'hammerjs';
 
 
@@ -52,7 +54,7 @@ const appRoutes: Routes = [
     MdInputModule,
     MdCardModule
   ],
-  exports: [MdTabsModule, MdMenuModule, MdToolbarModule, MdButtonModule, MdCheckboxModule,MdIconModule, MdInputModule,MdCardModule],
+  exports: [MdTabsModule, MdMenuModule, MdToolbarModule, MdButtonModule, MdCheckboxModule, MdIconModule, MdInputModule, MdCardModule],
   providers: [],
   bootstrap: [AppComponent]
 })
