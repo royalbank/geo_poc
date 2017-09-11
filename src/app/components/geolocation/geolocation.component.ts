@@ -77,8 +77,8 @@ export class GeolocationComponent implements OnInit {
 
 
           this.branchService.getNearbyBranches(this.latitude, this.longitude).subscribe(resp => {
-            console.log(resp.text());
-            this.branches = JSON.parse(resp.text());
+            console.log(resp.json());
+            this.branches = resp.json();
           });
         });
       });
