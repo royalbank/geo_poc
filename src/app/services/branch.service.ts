@@ -517,7 +517,7 @@ export class BranchService {
   // get branch list
   getBranches() { return this.branchArray; }
   getNearbyBranches(lat: number, lng: number) {
-    const req = this.http.post('http://localhost:8080/geo/nearby?srcLat=' + lat + '&srcLng=' + lng, this.branchArray);
+    const req = this.http.post('http://Test-env.n8mqpmaz3i.ca-central-1.elasticbeanstalk.com/geo/nearby?srcLat=' + lat + '&srcLng=' + lng, this.branchArray);
     return req;
   }
   //

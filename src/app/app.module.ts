@@ -10,6 +10,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdInputModule, MdCardModule, MdTabsModule, MdMenuModule, MdToolbarModule} from '@angular/material';
 import { MdButtonModule, MdCheckboxModule, MdIconModule } from '@angular/material';
+import {NgRedux, NgReduxModule} from 'ng2-redux';
+import {IAppState, rootReducer} from'./store'
 
 import 'hammerjs';
 
@@ -34,6 +36,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpModule,
+    NgReduxModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDHedrgF7LKlyUVa0HvqsbB-IWmpz3owi4',
@@ -58,4 +61,10 @@ const appRoutes: Routes = [
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(ngRedux: NgRedux<IAppState>){
+    ngRedux.configureStore(rootReducer, {counter:0 });
+  }
+
+
+}
